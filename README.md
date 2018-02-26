@@ -65,3 +65,47 @@ sudo nano /usr/share/apache-tomcat-7.0.85/conf/tomcat-users.xml
 
 ```
 We have now configure all that needs to be configured. Go back to the EC2 console and reboot the instance by right clicking on the instance and selecting reboot. This should not take more that a few minutes.
+
+Install Apache Maven
+
+```
+cd /usr/local
+wget http://www-eu.apache.org/dist/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz
+
+sudo tar xzf apache-maven-3.5.2-bin.tar.gz
+sudo ln -s apache-maven-3.5.2  maven
+```
+As you have downloaded precompiled Apache Maven files on your system. Now set the environments variables by creating new file /etc/profile.d/maven.sh.
+
+```
+sudo vi /etc/profile.d/maven.sh
+
+export M2_HOME=/usr/local/maven
+export PATH=${M2_HOME}/bin:${PATH}
+
+source /etc/profile.d/maven.sh
+```
+Finally, remove the downloaded archive file from the system to free disk space.
+
+```
+rm -f /usr/local/apache-maven-3.5.2-bin.tar.gz
+```
+Install springboot cli
+```
+wget http://repo.spring.io/release/org/springframework/boot/spring-boot-cli/1.5.10.RELEASE/spring-boot-cli-1.5.10.RELEASE-bin.tar.gz
+
+sudo mkdir /opt/spring-boot
+```
+Edit the /etc/profile by any editor such as: vim, nano, and append following lines at the end of the file.
+```
+export SPRING_HOME=/opt/spring-boot/spring-1.5.10.RELEASE
+export PATH=$SPRING_HOME/bin:$PATH
+```
+Then, issue below command make the environment variables effectively
+```
+source /etc/profile
+```
+To verify whether the Spring Boot CLI was installed successfully or not, we can issue below command:
+```
+spring --version
+```
